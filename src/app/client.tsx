@@ -5,11 +5,12 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 
 
 export const ClientPage = () => {
-    const trpc = useTRPC();
-    const {data : users} = useSuspenseQuery(trpc.getUsers.queryOptions());
+//     const trpc = useTRPC();
+//     const {data : users} = useSuspenseQuery(trpc.getUsers.queryOptions());
   return (
     <div>
-        Client Component : {JSON.stringify(users)};
+        {/* Client Component : {JSON.stringify(users)}; */}
+        Client Component
     </div>
   )
 }

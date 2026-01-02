@@ -98,6 +98,7 @@ export function LoginForm() {
                                         type='button'
                                         disabled={isPending}
                                     >
+                                    <Image alt='github' src='/logos/github.svg' width={20} height={20} />
                                         Continue with Github
                                     </Button>
                                     {/* Google Login */}
@@ -107,6 +108,7 @@ export function LoginForm() {
                                         type='button'
                                         disabled={isPending}
                                     >
+                                    <Image alt='github' src='/logos/google.svg' width={20} height={20} />
                                         Continue with Google
                                     </Button>
                                     {/* Explicit Login */}

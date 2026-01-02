@@ -1,9 +1,14 @@
+import Link from "next/link";
+
 import { LoginForm } from "@/features/auth/components/login-form";
-const LoginPage = () => {
+import { requireUnAuth } from "@/lib/auth-utils";
+
+
+const LoginPage = async () => {
+    await requireUnAuth();
+
     return (
-    <div>
-        <LoginForm />
-    </div>
+            <LoginForm />
     )
 }
 export default LoginPage;

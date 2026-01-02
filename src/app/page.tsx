@@ -1,14 +1,29 @@
-import { requireAuth } from "@/lib/auth-utils";
+"use client";
 
-const Page = async () => {
-  await requireAuth(); // this makes the page protected
+import { useTRPC } from "@/trpc/client";
+import { useMutation } from "@tanstack/react-query";
+
+const Page = () => {
+  const trpc = useTRPC();
+
+  const testAi = useMutation(trpc.testAi.mutationOptions());
 
   return (
-    <div className="min-h-screen min-w-screen flex items-center justify-center">
-      protected server component
+    <div className="min-h-screen flex items-center justify-center relative z-50">
+      Protected Client Component
 
+      <button
+        type="button"
+        className="px-4 py-2 bg-black text-white rounded pointer-events-auto"
+        onClick={() => {
+          console.log("clicked");
+          testAi.mutate();
+        }}
+      >
+        Test AI
+      </button>
     </div>
-  )
-}
+  );
+};
 
 export default Page;

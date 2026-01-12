@@ -1,29 +1,11 @@
-import { google } from '@ai-sdk/google';
-import { generateText } from 'ai';
+// src/trpc/routers/_app.ts
 
-import { inngest } from "@/inngest/client";
-import { baseProcedure, createTRPCRouter, premiumProcedure, protectedProcedure } from "../init";
-import prisma from "@/lib/db";
+import { workflowsRouter } from "@/features/workflows/server/routers";
+import { createTRPCRouter,  protectedProcedure } from "../init";
+
 export const appRouter = createTRPCRouter({
-  testAi : premiumProcedure.mutation(async() => {
-    await inngest.send({
-      name: "execute/ai",
-    });
-
-    return { success: true, message: "AI execution triggered." };
-  }),
-  getWorkflows: protectedProcedure
-    .query(() => {
-        return prisma.workflow.findMany();
-    }),
-    createWorkflow: protectedProcedure.mutation(async()=>{
-      return  inngest.send({
-        name: "test/hello.world", // should match the event defined in the function
-        data: {
-          name: "Test Workflow"
-        }
-      });
-    })
+  workflows: workflowsRouter,
+  
 });
 
 // export type definition of API

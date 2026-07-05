@@ -1,12 +1,8 @@
-// src/trpc/routers/_app.ts
-
-import { workflowsRouter } from "@/features/workflows/server/routers";
-import { createTRPCRouter,  protectedProcedure } from "../init";
+import { createTRPCRouter } from '../init';
+import { workflowsRouter } from '@/features/workflows/server/routers';
 
 export const appRouter = createTRPCRouter({
   workflows: workflowsRouter,
-  
 });
-
 // export type definition of API
 export type AppRouter = typeof appRouter;

@@ -1,22 +1,13 @@
-// src/lib/db.ts
-import { PrismaClient } from "../generated/prisma/client"; // Point directly to the generated client.ts
-import { PrismaPg } from "@prisma/adapter-pg"; // Required for Postgres in V7
-import { Pool } from "pg";
+import { PrismaClient } from "@/generated/prisma";
 
-const prismaClientSingleton = () => {
-  // Prisma 7 requires explicit connection handling
-  const pool = new Pool({ connectionString: process.env.DATABASE_URL });
-  const adapter = new PrismaPg(pool);
-  
-  return new PrismaClient({ adapter });
+const globalForPrisma = global as unknown as {
+  prisma: PrismaClient;
 };
 
-declare const globalThis: {
-  prismaGlobal: ReturnType<typeof prismaClientSingleton>;
-} & typeof global;
+const prisma = globalForPrisma.prisma || new PrismaClient();
 
-const prisma = globalThis.prismaGlobal ?? prismaClientSingleton();
+if (process.env.NODE_ENV !== "production") {
+  globalForPrisma.prisma = prisma;
+}
 
 export default prisma;
-
-if (process.env.NODE_ENV !== "production") globalThis.prismaGlobal = prisma;
